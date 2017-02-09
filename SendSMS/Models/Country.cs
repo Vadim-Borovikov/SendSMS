@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using RichardLawley.EF.AttributeConfig;
 
 namespace SendSMS.Models
 {
@@ -8,7 +9,10 @@ namespace SendSMS.Models
         public byte Code { get; set; }
 
         public string Name { get; set; }
-        public ushort MobileCode { get; set; }
+
+        public short MobileCode { get; set; }
+
+        [DecimalPrecision(3, 3)]
         public decimal PricePerSMS { get; set; }
     }
 }
