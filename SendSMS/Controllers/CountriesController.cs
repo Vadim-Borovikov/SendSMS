@@ -8,7 +8,7 @@ namespace SendSMS.Controllers
     {
         private readonly SendSMSContext _db = new SendSMSContext();
 
-        // GET: api/Countries
-        public Country[] GetCountries() => _db.Countries.ToArray();
+        // GET: api/countries
+        public CountryData[] GetCountries() => _db.Countries.Select(CountryData.FromCountry).ToArray();
     }
 }
