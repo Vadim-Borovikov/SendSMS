@@ -10,7 +10,7 @@ namespace SendSMS.Controllers
         private readonly SendSMSContext _db = new SendSMSContext();
 
         // GET: countries.json
-        // GET: countries.xml        
+        // GET: countries.xml
         /// <summary>
         /// Gets the countries.
         /// </summary>
