@@ -486,6 +486,30 @@
             Gets the countries list.
             </summary>
         </member>
+        <member name="M:SendSMS.Controllers.SMSController.SendSMS(System.String,System.String,System.String)">
+            <summary>
+            Sends the SMS.
+            </summary>
+            <param name="from">The sender of the message.</param>
+            <param name="to">the receiver of the message. Number that starts with + and country code.</param>
+            <param name="text">The text which should be sent.</param>
+            <returns></returns>
+        </member>
+        <member name="T:SendSMS.Models.State">
+            <summary>
+            Action state.
+            </summary>
+        </member>
+        <member name="F:SendSMS.Models.State.Success">
+            <summary>
+            Action was successful.
+            </summary>
+        </member>
+        <member name="F:SendSMS.Models.State.Failed">
+            <summary>
+            Action was a failure.
+            </summary>
+        </member>
         <member name="T:SendSMS.Models.CountryData">
             <summary>
             The country information

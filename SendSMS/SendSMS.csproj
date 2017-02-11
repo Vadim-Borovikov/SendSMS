@@ -17,7 +17,7 @@
     <AssemblyName>SendSMS</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -180,9 +180,15 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\CountriesController.cs" />
+    <Compile Include="Controllers\SMSController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logic\DummySMSSender.cs" />
+    <Compile Include="Logic\ISMSSender.cs" />
+    <Compile Include="Logic\SMSHelper.cs" />
+    <Compile Include="Models\SMS.cs" />
+    <Compile Include="Models\State.cs" />
     <Compile Include="Models\CountryData.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\SendSMSContextInitializer.cs" />
