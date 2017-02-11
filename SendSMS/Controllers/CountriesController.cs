@@ -12,9 +12,8 @@ namespace SendSMS.Controllers
         // GET: countries.json
         // GET: countries.xml
         /// <summary>
-        /// Gets the countries.
+        /// Gets the countries list.
         /// </summary>
-        /// <returns>Array of country</returns>
         public IEnumerable<CountryData> GetCountries() => _db.Countries.Select(CountryData.FromCountry);
     }
 }

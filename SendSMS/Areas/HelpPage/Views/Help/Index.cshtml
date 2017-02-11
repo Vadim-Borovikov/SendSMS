@@ -1,8 +1,6 @@
-@using System.Web.Http
 @using System.Web.Http.Controllers
 @using System.Web.Http.Description
 @using System.Collections.ObjectModel
-@using SendSMS.Areas.HelpPage.Models
 @model Collection<ApiDescription>
 
 @{
@@ -25,12 +23,17 @@
         <div class="content-wrapper">
             <h2>Introduction</h2>
             <p>
-                Provide a general description of your APIs here.
+                Web service for sending SMS, viewing sent SMS and aggregated statistics.<br />
+                The data is stored in a relational database.<br />
+                During send an SMS the mobile country code of the receiver will be identified and stored within the SMS record.<br />
+            </p>
+            <p>
+                This service is able to return the responses in JSON and XML formats.
             </p>
         </div>
     </section>
     <section class="content-wrapper main-content clear-fix">
-        @foreach (var group in apiGroups)
+        @foreach (IGrouping<HttpControllerDescriptor, ApiDescription> group in apiGroups)
         {
             @Html.DisplayFor(m => group, "ApiGroup")
         }

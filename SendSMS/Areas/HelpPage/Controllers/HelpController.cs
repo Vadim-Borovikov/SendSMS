@@ -1,6 +1,9 @@
-using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Description;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using SendSMS.Areas.HelpPage.ModelDescriptions;
 using SendSMS.Areas.HelpPage.Models;
 
@@ -28,16 +31,19 @@ namespace SendSMS.Areas.HelpPage.Controllers
         public ActionResult Index()
         {
             ViewBag.DocumentationProvider = Configuration.Services.GetDocumentationProvider();
-            return View(Configuration.Services.GetApiExplorer().ApiDescriptions);
+            Collection<ApiDescription> descriptions = Configuration.Services.GetApiExplorer().ApiDescriptions;
+            descriptions.ForEach(ReplaceExtInPath);
+            return View(descriptions);
         }
 
         public ActionResult Api(string apiId)
         {
-            if (!String.IsNullOrEmpty(apiId))
+            if (!string.IsNullOrEmpty(apiId))
             {
                 HelpPageApiModel apiModel = Configuration.GetHelpPageApiModel(apiId);
                 if (apiModel != null)
                 {
+                    RemoveExtUriParam(apiModel);
                     return View(apiModel);
                 }
             }
@@ -47,7 +53,7 @@ namespace SendSMS.Areas.HelpPage.Controllers
 
         public ActionResult ResourceModel(string modelName)
         {
-            if (!String.IsNullOrEmpty(modelName))
+            if (!string.IsNullOrEmpty(modelName))
             {
                 ModelDescriptionGenerator modelDescriptionGenerator = Configuration.GetModelDescriptionGenerator();
                 ModelDescription modelDescription;
@@ -58,6 +64,20 @@ namespace SendSMS.Areas.HelpPage.Controllers
             }
 
             return View(ErrorViewName);
+        }
+
+        private static void ReplaceExtInPath(ApiDescription description)
+        {
+            description.RelativePath = description.RelativePath.Replace(".{ext}", ".(json|xml)");
+        }
+
+        private static void RemoveExtUriParam(HelpPageApiModel apiModel)
+        {
+            ParameterDescription uriParam = apiModel.UriParameters.FirstOrDefault(p => p.Name == "ext");
+            if (uriParam != null)
+            {
+                apiModel.UriParameters.Remove(uriParam);
+            }
         }
     }
 }
