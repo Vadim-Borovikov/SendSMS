@@ -8,6 +8,12 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    @{
+        const string Format = "yyyy-MM-ddTHH:mm:ss";
+        string today = DateTime.UtcNow.Date.ToString(Format);
+        string now = DateTime.UtcNow.ToString(Format);
+        string sentParams = $"dateTimeFrom={today}&dateTimeTo={now}&skip={0}&take={10}";
+    }
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-collapse collapse">
@@ -15,6 +21,7 @@
                     <li><a href="~/">API Help Page</a></li>
                     <li><a href="~/countries.json">Countries list</a></li>
                     <li><a href="~/sms/send.json?from=The+Sender&to=%2B4917421293388&text=Hello+World">Send test SMS</a></li>
+                    <li><a href="~/sms/sent.json?@sentParams">Get test SMS records</a></li>
                 </ul>
             </div>
         </div>

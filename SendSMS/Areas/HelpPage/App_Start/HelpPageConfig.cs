@@ -12,7 +12,10 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Web;
 using System.Web.Http;
-using SendSMS.Models;
+using SendSMS.Models.API;
+using SendSMS.Models.DB;
+using Country = SendSMS.Models.API.Country;
+using SMS = SendSMS.Models.API.SMS;
 
 #if Handle_PageResultOfT
 using System.Web.Http.OData;
@@ -41,12 +44,22 @@ namespace SendSMS.Areas.HelpPage
             config.SetSampleObjects(new Dictionary<Type, object>
             {
                 {
-                    typeof(IEnumerable<CountryData>),
+                    typeof(IEnumerable<Country>),
                     new []
                     {
-                        new CountryData { MobileCode = "262", Code = "49", Name = "Germany", PricePerSMS = 0.06m },
-                        new CountryData { MobileCode = "232", Code = "43", Name = "Austria", PricePerSMS = 0.05m },
+                        new Country { MobileCode = "262", Code = "49", Name = "Germany", PricePerSMS = 0.06m },
+                        new Country { MobileCode = "232", Code = "43", Name = "Austria", PricePerSMS = 0.05m },
                     }
+                },
+                {
+                    typeof(GetSentSMSResult),
+                    new GetSentSMSResult(
+                        new []
+                        {
+                            new SMS { DateTime = DateTime.UtcNow.Date, From = "The Sender", MobileCountryCode = "49", Price = 0.06m, State = State.Success, To = "+4917421293388" },
+                            new SMS { DateTime = DateTime.UtcNow, From = "Goofy", MobileCountryCode = "", Price = 0m, State = State.Failed, To = "+8800807775533" }
+                        }
+                    )
                 }
             });
 

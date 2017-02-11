@@ -33,6 +33,16 @@ namespace SendSMS
                 }
             );
 
+            config.Routes.MapHttpRoute(
+                name: "Sent SMS",
+                routeTemplate: "sms/sent.{ext}",
+                defaults: new { controller = "sms", action = "GetSentSMS" },
+                constraints: new
+                {
+                    ext = new RegexRouteConstraint(ExtRegexPattern)
+                }
+            );
+
             config.Formatters.JsonFormatter.AddUriPathExtensionMapping("json", "application/json");
             config.Formatters.XmlFormatter.AddUriPathExtensionMapping("xml", "text/xml");
         }

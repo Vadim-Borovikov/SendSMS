@@ -495,42 +495,97 @@
             <param name="text">The text which should be sent.</param>
             <returns>The SMS sending state.</returns>
         </member>
-        <member name="T:SendSMS.Models.State">
+        <member name="M:SendSMS.Controllers.SMSController.GetSentSMS(System.DateTime,System.DateTime,System.Int32,System.Int32)">
+            <summary>
+            Gets the SMS sent earlier.
+            </summary>
+            <param name="dateTimeFrom">The earliest date and time to look. UTC.</param>
+            <param name="dateTimeTo">The latest date time to look. UTC.</param>
+            <param name="skip">The number of records to skip.</param>
+            <param name="take">The number of records to take.</param>
+            <returns>The suitable records and their total count.</returns>
+        </member>
+        <member name="T:SendSMS.Models.DB.State">
             <summary>
             Action state.
             </summary>
         </member>
-        <member name="F:SendSMS.Models.State.Success">
+        <member name="F:SendSMS.Models.DB.State.Success">
             <summary>
             Action was successful.
             </summary>
         </member>
-        <member name="F:SendSMS.Models.State.Failed">
+        <member name="F:SendSMS.Models.DB.State.Failed">
             <summary>
             Action was a failure.
             </summary>
         </member>
-        <member name="T:SendSMS.Models.CountryData">
+        <member name="T:SendSMS.Models.API.GetSentSMSResult">
+            <summary>
+            The SMS records information.
+            </summary>
+        </member>
+        <member name="P:SendSMS.Models.API.GetSentSMSResult.TotalCount">
+            <summary>
+            The total count of all items matching the filter.
+            </summary>
+        </member>
+        <member name="P:SendSMS.Models.API.GetSentSMSResult.Items">
+            <summary>
+            The items matching the filter.
+            </summary>
+        </member>
+        <member name="P:SendSMS.Models.API.SMS.DateTime">
+            <summary>
+            The date and time the SMS was sent, format: “yyyy-MM-ddTHH:mm:ss, UTC.
+            </summary>
+        </member>
+        <member name="P:SendSMS.Models.API.SMS.From">
+            <summary>
+            The sender of the SMS.
+            </summary>
+        </member>
+        <member name="P:SendSMS.Models.API.SMS.To">
+            <summary>
+            The receiver of the SMS.
+            </summary>
+        </member>
+        <member name="P:SendSMS.Models.API.SMS.MobileCountryCode">
+            <summary>
+            The mobile country code of the country where the receiver of the SMS belongs to.
+            </summary>
+        </member>
+        <member name="P:SendSMS.Models.API.SMS.Price">
+            <summary>
+            The price of the SMS in EUR, e.g. 0.06.
+            </summary>
+        </member>
+        <member name="P:SendSMS.Models.API.SMS.State">
+            <summary>
+            Success or Failed
+            </summary>
+        </member>
+        <member name="T:SendSMS.Models.API.Country">
             <summary>
             The country information
             </summary>
         </member>
-        <member name="P:SendSMS.Models.CountryData.Code">
+        <member name="P:SendSMS.Models.API.Country.Code">
             <summary>
             The country code of the country.
             </summary>
         </member>
-        <member name="P:SendSMS.Models.CountryData.Name">
+        <member name="P:SendSMS.Models.API.Country.Name">
             <summary>
             The name of the country.
             </summary>
         </member>
-        <member name="P:SendSMS.Models.CountryData.MobileCode">
+        <member name="P:SendSMS.Models.API.Country.MobileCode">
             <summary>
             The mobile country code of the country.
             </summary>
         </member>
-        <member name="P:SendSMS.Models.CountryData.PricePerSMS">
+        <member name="P:SendSMS.Models.API.Country.PricePerSMS">
             <summary>
             The price per SMS sent in this country in EUR.
             </summary>

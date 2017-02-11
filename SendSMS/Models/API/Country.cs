@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace SendSMS.Models
+namespace SendSMS.Models.API
 {
     /// <summary>
     /// The country information
     /// </summary>
     [DataContract]
-    public class CountryData
+    public class Country
     {
         /// <summary>
         /// The country code of the country.
@@ -33,10 +33,10 @@ namespace SendSMS.Models
         [DataMember(Name = "pricePerSMS", Order = 4)]
         public decimal PricePerSMS { get; set; }
 
-        public static CountryData FromCountry(Country country) => new CountryData(country);
+        public static Country FromDB(DB.Country country) => new Country(country);
 
-        public CountryData() { }
-        private CountryData(Country country)
+        public Country() { }
+        private Country(DB.Country country)
         {
             MobileCode = country.MobileCode.ToString();
             Code = country.Code.ToString();

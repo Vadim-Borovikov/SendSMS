@@ -180,6 +180,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\CountriesController.cs" />
+    <Compile Include="Models\DB\SMS.cs" />
+    <Compile Include="Models\API\GetSentSMSResult.cs" />
     <Compile Include="Controllers\SMSController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -187,10 +189,10 @@
     <Compile Include="Logic\DummySMSSender.cs" />
     <Compile Include="Logic\ISMSSender.cs" />
     <Compile Include="Logic\SMSHelper.cs" />
-    <Compile Include="Models\SMS.cs" />
-    <Compile Include="Models\State.cs" />
-    <Compile Include="Models\CountryData.cs" />
-    <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\API\SMS.cs" />
+    <Compile Include="Models\DB\State.cs" />
+    <Compile Include="Models\API\Country.cs" />
+    <Compile Include="Models\DB\Country.cs" />
     <Compile Include="Models\SendSMSContextInitializer.cs" />
     <Compile Include="Models\SendSMSContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

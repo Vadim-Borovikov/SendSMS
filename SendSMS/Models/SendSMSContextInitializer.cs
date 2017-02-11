@@ -1,8 +1,9 @@
 ﻿using System.Data.Entity;
+using SendSMS.Models.DB;
 
 namespace SendSMS.Models
 {
-    public class SendSMSContextInitializer : DropCreateDatabaseAlways<SendSMSContext>
+    public class SendSMSContextInitializer : DropCreateDatabaseIfModelChanges<SendSMSContext>
     {
         protected override void Seed(SendSMSContext db)
         {

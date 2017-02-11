@@ -21,9 +21,10 @@ namespace SendSMS
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            HttpConfiguration config = GlobalConfiguration.Configuration;
-            config.Formatters.JsonFormatter.SerializerSettings.Formatting = Formatting.Indented;
-            config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new StringEnumConverter());
+            JsonSerializerSettings jsonSettings = GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings;
+            jsonSettings.Formatting = Formatting.Indented;
+            jsonSettings.DateFormatString = "yyyy-MM-ddTHH:mm:ss";
+            jsonSettings.Converters.Add(new StringEnumConverter());
         }
     }
 }

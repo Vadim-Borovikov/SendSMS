@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.IO;
 using SendSMS.Models;
+using SendSMS.Models.DB;
 
 namespace SendSMS.Logic
 {

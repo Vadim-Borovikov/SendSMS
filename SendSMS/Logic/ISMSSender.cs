@@ -1,5 +1,6 @@
 ﻿using System;
 using SendSMS.Models;
+using SendSMS.Models.DB;
 
 namespace SendSMS.Logic
 {

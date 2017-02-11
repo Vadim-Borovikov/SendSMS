@@ -1,4 +1,4 @@
-﻿namespace SendSMS.Models
+﻿namespace SendSMS.Models.DB
 {
     /// <summary>
     /// Action state.

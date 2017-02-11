@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Http;
 using SendSMS.Models;
+using SendSMS.Models.API;
 
 namespace SendSMS.Controllers
 {
@@ -14,6 +15,6 @@ namespace SendSMS.Controllers
         /// <summary>
         /// Gets the countries list.
         /// </summary>
-        public IEnumerable<CountryData> GetCountries() => _db.Countries.Select(CountryData.FromCountry);
+        public IEnumerable<Country> GetCountries() => _db.Countries.Select(Country.FromDB);
     }
 }
