@@ -14,17 +14,29 @@ namespace SendSMS
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "Api UriPathExtension",
-                routeTemplate: "{controller}.{ext}",
-                defaults: new { },
+                name: "Countries",
+                routeTemplate: "countries.{ext}",
+                defaults: new { controller = "countries" },
                 constraints: new
                 {
-                    ext = new RegexRouteConstraint("^xml$|^json$")
+                    ext = new RegexRouteConstraint(ExtRegexPattern)
+                }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "Send SMS",
+                routeTemplate: "sms/send.{ext}",
+                defaults: new { controller = "sms", action = "SendSMS" },
+                constraints: new
+                {
+                    ext = new RegexRouteConstraint(ExtRegexPattern)
                 }
             );
 
             config.Formatters.JsonFormatter.AddUriPathExtensionMapping("json", "application/json");
             config.Formatters.XmlFormatter.AddUriPathExtensionMapping("xml", "text/xml");
         }
+
+        private const string ExtRegexPattern = "^xml$|^json$";
     }
 }
