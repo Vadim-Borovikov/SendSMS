@@ -49,7 +49,7 @@ namespace SendSMS.Controllers
         /// <param name="skip">The number of records to skip.</param>
         /// <param name="take">The number of records to take.</param>
         /// <returns>The suitable records and their total count.</returns>
-        public GetSentSMSResult GetSentSMS(DateTime dateTimeFrom, DateTime dateTimeTo, int skip, int take)
+        public GetSentSMSResult GetSentSMS(DateTime? dateTimeFrom = null, DateTime? dateTimeTo = null, int skip = 0, int? take = null)
         {
             List<Models.DB.SMS> records =
                 SMSHelper.FilterSMS(dateTimeFrom, dateTimeTo, skip, take, _db.SentSMS).ToList();

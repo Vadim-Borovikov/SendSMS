@@ -21,9 +21,9 @@ namespace SendSMS.Controllers
         /// <param name="dateTo">The latest date to look.</param>
         /// <param name="mccList">A list of mobile country codes to filter, e.g. "262,232".
         /// If list is empty this means: include all mobile country codes.</param>
-        public IEnumerable<Record> GetStatistics(DateTime dateFrom, DateTime dateTo, string mccList)
+        public IEnumerable<Record> GetStatistics(DateTime? dateFrom = null, DateTime? dateTo = null, string mccList = null)
         {
-            short[] codes = mccList.Split(',').Select(short.Parse).ToArray();
+            List<short> codes = mccList?.Split(',').Select(short.Parse).ToList();
             return SMSHelper.GetStatistics(dateFrom, dateTo, codes, _db.Countries, _db.SentSMS);
         }
     }

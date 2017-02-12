@@ -486,7 +486,7 @@
             Gets the countries list.
             </summary>
         </member>
-        <member name="M:SendSMS.Controllers.StatisticsController.GetStatistics(System.DateTime,System.DateTime,System.String)">
+        <member name="M:SendSMS.Controllers.StatisticsController.GetStatistics(System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.String)">
             <summary>
             Gets the statistics for days and counties.
             </summary>
@@ -504,7 +504,7 @@
             <param name="text">The text which should be sent.</param>
             <returns>The SMS sending state.</returns>
         </member>
-        <member name="M:SendSMS.Controllers.SMSController.GetSentSMS(System.DateTime,System.DateTime,System.Int32,System.Int32)">
+        <member name="M:SendSMS.Controllers.SMSController.GetSentSMS(System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int32,System.Nullable{System.Int32})">
             <summary>
             Gets the SMS sent earlier.
             </summary>
