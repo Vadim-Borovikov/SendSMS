@@ -14,7 +14,6 @@ using System.Web;
 using System.Web.Http;
 using SendSMS.Models.API;
 using SendSMS.Models.DB;
-using Country = SendSMS.Models.API.Country;
 using SMS = SendSMS.Models.API.SMS;
 
 #if Handle_PageResultOfT
@@ -41,14 +40,19 @@ namespace SendSMS.Areas.HelpPage
             // Uncomment the following to use the documentation from XML documentation file.
             config.SetDocumentationProvider(new XmlDocumentationProvider(HttpContext.Current.Server.MapPath("~/App_Data/XmlDocument.xml")));
 
+            const string DateFormat = "yyyy-MM-dd";
+            string dateTimeFormat = $"{DateFormat}THH:mm:ss";
+            var germany = new SendSMS.Models.DB.Country { MobileCode = 262, Code = 49, Name = "Germany", PricePerSMS = 0.055m };
+            var austria = new SendSMS.Models.DB.Country { MobileCode = 232, Code = 43, Name = "Austria", PricePerSMS = 0.053m };
+
             config.SetSampleObjects(new Dictionary<Type, object>
             {
                 {
-                    typeof(IEnumerable<Country>),
+                    typeof(IEnumerable<SendSMS.Models.API.Country>),
                     new []
                     {
-                        new Country { MobileCode = "262", Code = "49", Name = "Germany", PricePerSMS = 0.06m },
-                        new Country { MobileCode = "232", Code = "43", Name = "Austria", PricePerSMS = 0.05m },
+                        SendSMS.Models.API.Country.FromDB(germany),
+                        SendSMS.Models.API.Country.FromDB(austria)
                     }
                 },
                 {
@@ -56,11 +60,19 @@ namespace SendSMS.Areas.HelpPage
                     new GetSentSMSResult(
                         new []
                         {
-                            new SMS { DateTime = DateTime.UtcNow.Date, From = "The Sender", MobileCountryCode = "49", Price = 0.06m, State = State.Success, To = "+4917421293388" },
-                            new SMS { DateTime = DateTime.UtcNow, From = "Goofy", MobileCountryCode = "", Price = 0m, State = State.Failed, To = "+8800807775533" }
+                            new SMS { DateTime = DateTime.UtcNow.Date.ToString(dateTimeFormat), From = "The Sender", MobileCountryCode = "49", Price = 0.06m, State = State.Success, To = "+4917421293388" },
+                            new SMS { DateTime = DateTime.UtcNow.ToString(dateTimeFormat), From = "Goofy", MobileCountryCode = "", Price = 0m, State = State.Failed, To = "+8800807775533" }
                         }
                     )
-                }
+                },
+                {
+                    typeof(IEnumerable<Record>),
+                    new []
+                    {
+                        new Record(DateTime.UtcNow.Date, germany, 42),
+                        new Record(DateTime.UtcNow.Date.AddDays(-1), austria, 13)
+                    }
+                },
             });
 
             // Extend the following to provide factories for types not handled automatically (those lacking parameterless

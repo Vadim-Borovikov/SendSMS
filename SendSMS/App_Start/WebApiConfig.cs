@@ -24,6 +24,16 @@ namespace SendSMS
             );
 
             config.Routes.MapHttpRoute(
+                name: "Statistics",
+                routeTemplate: "statistics.{ext}",
+                defaults: new { controller = "statistics" },
+                constraints: new
+                {
+                    ext = new RegexRouteConstraint(ExtRegexPattern)
+                }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "Send SMS",
                 routeTemplate: "sms/send.{ext}",
                 defaults: new { controller = "sms", action = "SendSMS" },

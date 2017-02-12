@@ -9,10 +9,20 @@
 </head>
 <body>
     @{
-        const string Format = "yyyy-MM-ddTHH:mm:ss";
-        string today = DateTime.UtcNow.Date.ToString(Format);
-        string now = DateTime.UtcNow.ToString(Format);
-        string sentParams = $"dateTimeFrom={today}&dateTimeTo={now}&skip={0}&take={10}";
+        const string DateFormat = "yyyy-MM-dd";
+        string dateTimeFormat = $"{DateFormat}THH:mm:ss";
+
+        DateTime now = DateTime.UtcNow;
+        DateTime today = now.Date;
+        DateTime yesterday = now.Date.AddDays(-1);
+
+        string nowAsDateTime = now.ToString(dateTimeFormat);
+        string todayAsDateTime = today.ToString(dateTimeFormat);
+        string smsSentParams = $"dateTimeFrom={todayAsDateTime}&dateTimeTo={nowAsDateTime}&skip={0}&take={10}";
+
+        string todayAsDate = today.ToString(DateFormat);
+        string yesterdayAsDate = yesterday.ToString(DateFormat);
+        string statisticsParams = $"dateFrom={yesterdayAsDate}&dateTo={todayAsDate}&mccList=262,232";
     }
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -21,7 +31,8 @@
                     <li><a href="~/">API Help Page</a></li>
                     <li><a href="~/countries.json">Countries list</a></li>
                     <li><a href="~/sms/send.json?from=The+Sender&to=%2B4917421293388&text=Hello+World">Send test SMS</a></li>
-                    <li><a href="~/sms/sent.json?@sentParams">Get test SMS records</a></li>
+                    <li><a href="~/sms/sent.json?@smsSentParams">Get test SMS records</a></li>
+                    <li><a href="~/statistics.json?@statisticsParams">Get test statistics</a></li>
                 </ul>
             </div>
         </div>

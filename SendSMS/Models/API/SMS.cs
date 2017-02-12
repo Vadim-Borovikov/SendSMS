@@ -7,10 +7,10 @@ namespace SendSMS.Models.API
     public class SMS
     {
         /// <summary>
-        /// The date and time the SMS was sent, format: “yyyy-MM-ddTHH:mm:ss, UTC.
+        /// The date and time the SMS was sent, format: "yyyy-MM-ddTHH:mm:ss", UTC.
         /// </summary>
         [DataMember(Name = "dataTime", Order = 1)]
-        public DateTime DateTime { get; set; }
+        public string DateTime { get; set; }
 
         /// <summary>
         /// The sender of the SMS.
@@ -47,7 +47,7 @@ namespace SendSMS.Models.API
         public SMS() { }
         private SMS(DB.SMS sms)
         {
-            DateTime = sms.SentTime;
+            DateTime = sms.SentTime.ToString("yyyy-MM-ddTHH:mm:ss");
             From = sms.From;
             To = sms.To;
             MobileCountryCode = sms.MobileCountryCode?.ToString() ?? "";

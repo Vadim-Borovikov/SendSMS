@@ -486,6 +486,15 @@
             Gets the countries list.
             </summary>
         </member>
+        <member name="M:SendSMS.Controllers.StatisticsController.GetStatistics(System.DateTime,System.DateTime,System.String)">
+            <summary>
+            Gets the statistics for days and counties.
+            </summary>
+            <param name="dateFrom">The earliest date to look.</param>
+            <param name="dateTo">The latest date to look.</param>
+            <param name="mccList">A list of mobile country codes to filter, e.g. "262,232".
+            If list is empty this means: include all mobile country codes.</param>
+        </member>
         <member name="M:SendSMS.Controllers.SMSController.SendSMS(System.String,System.String,System.String)">
             <summary>
             Sends the SMS.
@@ -505,19 +514,34 @@
             <param name="take">The number of records to take.</param>
             <returns>The suitable records and their total count.</returns>
         </member>
-        <member name="T:SendSMS.Models.DB.State">
+        <member name="T:SendSMS.Models.API.Record">
             <summary>
-            Action state.
+            The country information
             </summary>
         </member>
-        <member name="F:SendSMS.Models.DB.State.Success">
+        <member name="P:SendSMS.Models.API.Record.Day">
             <summary>
-            Action was successful.
+            The date. Format: "yyyy-MM-dd".
             </summary>
         </member>
-        <member name="F:SendSMS.Models.DB.State.Failed">
+        <member name="P:SendSMS.Models.API.Record.MobileCountryCode">
             <summary>
-            Action was a failure.
+            The mobile country code.
+            </summary>
+        </member>
+        <member name="P:SendSMS.Models.API.Record.PricePerSMS">
+            <summary>
+            The price per SMS in EUR, e.g. 0.06.
+            </summary>
+        </member>
+        <member name="F:SendSMS.Models.API.Record.Count">
+            <summary>
+            The count of SMS on the day and mcc.
+            </summary>
+        </member>
+        <member name="P:SendSMS.Models.API.Record.TotalPrice">
+            <summary>
+            The total price of all SMS on the day and mcc in EUR, e.g. 23.64.
             </summary>
         </member>
         <member name="T:SendSMS.Models.API.GetSentSMSResult">
@@ -537,7 +561,7 @@
         </member>
         <member name="P:SendSMS.Models.API.SMS.DateTime">
             <summary>
-            The date and time the SMS was sent, format: “yyyy-MM-ddTHH:mm:ss, UTC.
+            The date and time the SMS was sent, format: "yyyy-MM-ddTHH:mm:ss", UTC.
             </summary>
         </member>
         <member name="P:SendSMS.Models.API.SMS.From">
@@ -588,6 +612,21 @@
         <member name="P:SendSMS.Models.API.Country.PricePerSMS">
             <summary>
             The price per SMS sent in this country in EUR.
+            </summary>
+        </member>
+        <member name="T:SendSMS.Models.DB.State">
+            <summary>
+            Action state.
+            </summary>
+        </member>
+        <member name="F:SendSMS.Models.DB.State.Success">
+            <summary>
+            Action was successful.
+            </summary>
+        </member>
+        <member name="F:SendSMS.Models.DB.State.Failed">
+            <summary>
+            Action was a failure.
             </summary>
         </member>
     </members>

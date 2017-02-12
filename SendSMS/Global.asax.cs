@@ -23,7 +23,6 @@ namespace SendSMS
 
             JsonSerializerSettings jsonSettings = GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings;
             jsonSettings.Formatting = Formatting.Indented;
-            jsonSettings.DateFormatString = "yyyy-MM-ddTHH:mm:ss";
             jsonSettings.Converters.Add(new StringEnumConverter());
         }
     }
