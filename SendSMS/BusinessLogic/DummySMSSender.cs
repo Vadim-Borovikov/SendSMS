@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Configuration;
 using System.IO;
-using SendSMS.Models;
-using SendSMS.Models.DB;
+using SendSMS.Data;
 
-namespace SendSMS.Logic
+namespace SendSMS.BusinessLogic
 {
     public class DummySMSSender : ISMSSender
     {

@@ -1,8 +1,6 @@
-﻿using System;
-using SendSMS.Models;
-using SendSMS.Models.DB;
+﻿using SendSMS.Data;
 
-namespace SendSMS.Logic
+namespace SendSMS.BusinessLogic
 {
     public interface ISMSSender
     {

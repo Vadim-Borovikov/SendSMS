@@ -1,10 +1,9 @@
 ﻿using System.Data.Entity;
 using RichardLawley.EF.AttributeConfig;
-using SendSMS.Models.DB;
 
-namespace SendSMS.Models
+namespace SendSMS.Data
 {
-    public class SendSMSContext : DbContext
+    public class Context : DbContext
     {
         public DbSet<Country> Countries { get; set; }
         public DbSet<SMS> SentSMS { get; set; }

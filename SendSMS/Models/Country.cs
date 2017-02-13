@@ -1,10 +1,9 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
-namespace SendSMS.Models.API
+namespace SendSMS.Models
 {
     /// <summary>
-    /// The country information
+    /// The country
     /// </summary>
     [DataContract]
     public class Country
@@ -32,16 +31,5 @@ namespace SendSMS.Models.API
         /// </summary>
         [DataMember(Name = "pricePerSMS", Order = 4)]
         public decimal PricePerSMS { get; set; }
-
-        public static Country FromDB(DB.Country country) => new Country(country);
-
-        public Country() { }
-        private Country(DB.Country country)
-        {
-            MobileCode = country.MobileCode.ToString();
-            Code = country.Code.ToString();
-            Name = country.Name;
-            PricePerSMS = Math.Round(country.PricePerSMS, 2);
-        }
     }
 }

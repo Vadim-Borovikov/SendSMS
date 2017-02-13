@@ -50,10 +50,6 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="EFAttributeConfig, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EFAttributeConfig.1.0.0.0\lib\net45\EFAttributeConfig.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -181,22 +177,17 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
-    <Compile Include="Models\API\Record.cs" />
-    <Compile Include="Models\DB\SMS.cs" />
-    <Compile Include="Models\API\GetSentSMSResult.cs" />
+    <Compile Include="Models\GetSentSMSResponse.cs" />
     <Compile Include="Controllers\SMSController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Logic\DummySMSSender.cs" />
-    <Compile Include="Logic\ISMSSender.cs" />
-    <Compile Include="Logic\SMSHelper.cs" />
-    <Compile Include="Models\API\SMS.cs" />
-    <Compile Include="Models\DB\State.cs" />
-    <Compile Include="Models\API\Country.cs" />
-    <Compile Include="Models\DB\Country.cs" />
-    <Compile Include="Models\SendSMSContextInitializer.cs" />
-    <Compile Include="Models\SendSMSContext.cs" />
+    <Compile Include="BusinessLogic\DummySMSSender.cs" />
+    <Compile Include="BusinessLogic\ISMSSender.cs" />
+    <Compile Include="BusinessLogic\DataManager.cs" />
+    <Compile Include="Models\Record.cs" />
+    <Compile Include="Models\SMS.cs" />
+    <Compile Include="Models\Country.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -264,12 +255,17 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SendSMS.Data\SendSMS.Data.csproj">
+      <Project>{9fa102a5-8d41-484c-a863-351bc9814445}</Project>
+      <Name>SendSMS.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,7 +1,7 @@
 ﻿using System;
 using RichardLawley.EF.AttributeConfig;
 
-namespace SendSMS.Models.DB
+namespace SendSMS.Data
 {
     public class SMS
     {
@@ -19,17 +19,5 @@ namespace SendSMS.Models.DB
         public decimal? Price { get; set; }
 
         public State State { get; set; }
-
-        public SMS() { }
-
-        internal SMS(string from, string to, Country country, State state)
-        {
-            From = from;
-            To = to;
-            MobileCountryCode = country?.MobileCode;
-            Price = country?.PricePerSMS;
-            State = state;
-            SentTime = DateTime.UtcNow;
-        }
     }
 }

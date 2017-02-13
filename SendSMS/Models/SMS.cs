@@ -1,9 +1,11 @@
-using System;
 using System.Runtime.Serialization;
-using SendSMS.Models.DB;
 
-namespace SendSMS.Models.API
+namespace SendSMS.Models
 {
+    /// <summary>
+    /// The SMS
+    /// </summary>
+    [DataContract]
     public class SMS
     {
         /// <summary>
@@ -40,20 +42,6 @@ namespace SendSMS.Models.API
         /// Success or Failed
         /// </summary>
         [DataMember(Name = "state", Order = 6)]
-        public State State { get; set; }
-
-        public static SMS FromDB(DB.SMS sms) => new SMS(sms);
-
-        public SMS() { }
-        private SMS(DB.SMS sms)
-        {
-            DateTime = sms.SentTime.ToString("yyyy-MM-ddTHH:mm:ss");
-            From = sms.From;
-            To = sms.To;
-            MobileCountryCode = sms.MobileCountryCode?.ToString() ?? "";
-            Price = sms.Price.HasValue ? Math.Round(sms.Price.Value, 2) : 0m;
-            State = sms.State;
-        }
-
+        public Data.State State { get; set; }
     }
 }

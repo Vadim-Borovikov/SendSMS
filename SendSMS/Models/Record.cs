@@ -1,10 +1,9 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
-namespace SendSMS.Models.API
+namespace SendSMS.Models
 {
     /// <summary>
-    /// The country information
+    /// The statistics record
     /// </summary>
     [DataContract]
     public class Record
@@ -38,16 +37,5 @@ namespace SendSMS.Models.API
         /// </summary>
         [DataMember(Name = "totalPrice", Order = 5)]
         public decimal TotalPrice { get; set; }
-
-        public Record() { }
-
-        internal Record(DateTime day, DB.Country country, int smsCount)
-        {
-            Day = day.ToString("yyyy-MM-dd");
-            MobileCountryCode = country.MobileCode.ToString();
-            PricePerSMS = Math.Round(country.PricePerSMS, 2);
-            Count = smsCount;
-            TotalPrice = Math.Round(country.PricePerSMS * Count, 2);
-        }
     }
 }

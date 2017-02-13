@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using RichardLawley.EF.AttributeConfig;
 
-namespace SendSMS.Models.DB
+namespace SendSMS.Data
 {
     public class Country
     {

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace SendSMS.Models.API
+namespace SendSMS.Models
 {
     /// <summary>
     /// The SMS records information.
     /// </summary>
-    public class GetSentSMSResult
+    [DataContract]
+    public class GetSentSMSResponse
     {
         /// <summary>
         /// The total count of all items matching the filter.
@@ -19,13 +20,5 @@ namespace SendSMS.Models.API
         /// </summary>
         [DataMember(Name = "items", Order = 2)]
         public IEnumerable<SMS> Items { get; set; }
-
-        public GetSentSMSResult() { }
-
-        internal GetSentSMSResult(IReadOnlyCollection<SMS> items)
-        {
-            TotalCount = items.Count;
-            Items = items;
-        }
     }
 }

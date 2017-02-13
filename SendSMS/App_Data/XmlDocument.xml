@@ -514,119 +514,109 @@
             <param name="take">The number of records to take.</param>
             <returns>The suitable records and their total count.</returns>
         </member>
-        <member name="T:SendSMS.Models.API.Record">
-            <summary>
-            The country information
-            </summary>
-        </member>
-        <member name="P:SendSMS.Models.API.Record.Day">
-            <summary>
-            The date. Format: "yyyy-MM-dd".
-            </summary>
-        </member>
-        <member name="P:SendSMS.Models.API.Record.MobileCountryCode">
-            <summary>
-            The mobile country code.
-            </summary>
-        </member>
-        <member name="P:SendSMS.Models.API.Record.PricePerSMS">
-            <summary>
-            The price per SMS in EUR, e.g. 0.06.
-            </summary>
-        </member>
-        <member name="F:SendSMS.Models.API.Record.Count">
-            <summary>
-            The count of SMS on the day and mcc.
-            </summary>
-        </member>
-        <member name="P:SendSMS.Models.API.Record.TotalPrice">
-            <summary>
-            The total price of all SMS on the day and mcc in EUR, e.g. 23.64.
-            </summary>
-        </member>
-        <member name="T:SendSMS.Models.API.GetSentSMSResult">
+        <member name="T:SendSMS.Models.GetSentSMSResponse">
             <summary>
             The SMS records information.
             </summary>
         </member>
-        <member name="P:SendSMS.Models.API.GetSentSMSResult.TotalCount">
+        <member name="P:SendSMS.Models.GetSentSMSResponse.TotalCount">
             <summary>
             The total count of all items matching the filter.
             </summary>
         </member>
-        <member name="P:SendSMS.Models.API.GetSentSMSResult.Items">
+        <member name="P:SendSMS.Models.GetSentSMSResponse.Items">
             <summary>
             The items matching the filter.
             </summary>
         </member>
-        <member name="P:SendSMS.Models.API.SMS.DateTime">
+        <member name="T:SendSMS.Models.Record">
+            <summary>
+            The statistics record
+            </summary>
+        </member>
+        <member name="P:SendSMS.Models.Record.Day">
+            <summary>
+            The date. Format: "yyyy-MM-dd".
+            </summary>
+        </member>
+        <member name="P:SendSMS.Models.Record.MobileCountryCode">
+            <summary>
+            The mobile country code.
+            </summary>
+        </member>
+        <member name="P:SendSMS.Models.Record.PricePerSMS">
+            <summary>
+            The price per SMS in EUR, e.g. 0.06.
+            </summary>
+        </member>
+        <member name="F:SendSMS.Models.Record.Count">
+            <summary>
+            The count of SMS on the day and mcc.
+            </summary>
+        </member>
+        <member name="P:SendSMS.Models.Record.TotalPrice">
+            <summary>
+            The total price of all SMS on the day and mcc in EUR, e.g. 23.64.
+            </summary>
+        </member>
+        <member name="T:SendSMS.Models.SMS">
+            <summary>
+            The SMS
+            </summary>
+        </member>
+        <member name="P:SendSMS.Models.SMS.DateTime">
             <summary>
             The date and time the SMS was sent, format: "yyyy-MM-ddTHH:mm:ss", UTC.
             </summary>
         </member>
-        <member name="P:SendSMS.Models.API.SMS.From">
+        <member name="P:SendSMS.Models.SMS.From">
             <summary>
             The sender of the SMS.
             </summary>
         </member>
-        <member name="P:SendSMS.Models.API.SMS.To">
+        <member name="P:SendSMS.Models.SMS.To">
             <summary>
             The receiver of the SMS.
             </summary>
         </member>
-        <member name="P:SendSMS.Models.API.SMS.MobileCountryCode">
+        <member name="P:SendSMS.Models.SMS.MobileCountryCode">
             <summary>
             The mobile country code of the country where the receiver of the SMS belongs to.
             </summary>
         </member>
-        <member name="P:SendSMS.Models.API.SMS.Price">
+        <member name="P:SendSMS.Models.SMS.Price">
             <summary>
             The price of the SMS in EUR, e.g. 0.06.
             </summary>
         </member>
-        <member name="P:SendSMS.Models.API.SMS.State">
+        <member name="P:SendSMS.Models.SMS.State">
             <summary>
             Success or Failed
             </summary>
         </member>
-        <member name="T:SendSMS.Models.API.Country">
+        <member name="T:SendSMS.Models.Country">
             <summary>
-            The country information
+            The country
             </summary>
         </member>
-        <member name="P:SendSMS.Models.API.Country.Code">
+        <member name="P:SendSMS.Models.Country.Code">
             <summary>
             The country code of the country.
             </summary>
         </member>
-        <member name="P:SendSMS.Models.API.Country.Name">
+        <member name="P:SendSMS.Models.Country.Name">
             <summary>
             The name of the country.
             </summary>
         </member>
-        <member name="P:SendSMS.Models.API.Country.MobileCode">
+        <member name="P:SendSMS.Models.Country.MobileCode">
             <summary>
             The mobile country code of the country.
             </summary>
         </member>
-        <member name="P:SendSMS.Models.API.Country.PricePerSMS">
+        <member name="P:SendSMS.Models.Country.PricePerSMS">
             <summary>
             The price per SMS sent in this country in EUR.
-            </summary>
-        </member>
-        <member name="T:SendSMS.Models.DB.State">
-            <summary>
-            Action state.
-            </summary>
-        </member>
-        <member name="F:SendSMS.Models.DB.State.Success">
-            <summary>
-            Action was successful.
-            </summary>
-        </member>
-        <member name="F:SendSMS.Models.DB.State.Failed">
-            <summary>
-            Action was a failure.
             </summary>
         </member>
     </members>
