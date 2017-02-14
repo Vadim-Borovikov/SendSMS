@@ -8,8 +8,6 @@ namespace SendSMS.Controllers
 {
     public class StatisticsController : ApiController
     {
-        private readonly Data.Context _db = new Data.Context();
-
         // GET: statistics.json?dateFrom=2015-03-01&dateTo=2015-03-05&mccList=262,232
         // GET: statistics.xml?dateFrom=2015-03-01&dateTo=2015-03-05&mccList=262,232
         /// <summary>
@@ -22,7 +20,7 @@ namespace SendSMS.Controllers
         public IEnumerable<Record> GetStatistics(DateTime? dateFrom = null, DateTime? dateTo = null,
                                                  string mccList = null)
         {
-            return DataManager.GetStatistics(dateFrom, dateTo, mccList, _db.SentSMS, _db.Countries);
+            return DataManager.GetStatistics(dateFrom, dateTo, mccList);
         }
     }
 }

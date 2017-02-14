@@ -41,36 +41,45 @@ namespace SendSMS.Areas.HelpPage
 
             const string DateFormat = "yyyy-MM-dd";
             string dateTimeFormat = $"{DateFormat}THH:mm:ss";
+
             var germany = new Data.Country { MobileCode = 262, Code = 49, Name = "Germany", PricePerSMS = 0.055m };
             var austria = new Data.Country { MobileCode = 232, Code = 43, Name = "Austria", PricePerSMS = 0.053m };
+
+            var successSms = new SMS
+            {
+                DateTime = DateTime.UtcNow.Date.ToString(dateTimeFormat),
+                From = "The Sender",
+                MobileCountryCode = "49",
+                Price = 0.06m,
+                State = Data.State.Success,
+                To = "+4917421293388"
+            };
+            var failedSms = new SMS
+            {
+                DateTime = DateTime.UtcNow.ToString(dateTimeFormat),
+                From = "Goofy",
+                MobileCountryCode = "",
+                Price = 0m,
+                State = Data.State.Failed,
+                To = "+8800807775533"
+            };
+
+            var germanyRecord = DataManager.CreateRecord(DateTime.UtcNow.Date, germany, 42);
+            var austriaRecord = DataManager.CreateRecord(DateTime.UtcNow.Date.AddDays(-1), austria, 13);
 
             config.SetSampleObjects(new Dictionary<Type, object>
             {
                 {
                     typeof(IEnumerable<Country>),
-                    new []
-                    {
-                        DataManager.CreateInfo(germany),
-                        DataManager.CreateInfo(austria)
-                    }
+                    new [] { DataManager.CreateInfo(germany), DataManager.CreateInfo(austria) }
                 },
                 {
                     typeof(GetSentSMSResponse),
-                    DataManager.CreateGetSentSMSResponse(
-                        new []
-                        {
-                            new SMS { DateTime = DateTime.UtcNow.Date.ToString(dateTimeFormat), From = "The Sender", MobileCountryCode = "49", Price = 0.06m, State = Data.State.Success, To = "+4917421293388" },
-                            new SMS { DateTime = DateTime.UtcNow.ToString(dateTimeFormat), From = "Goofy", MobileCountryCode = "", Price = 0m, State = Data.State.Failed, To = "+8800807775533" }
-                        }
-                    )
+                    DataManager.CreateGetSentSMSResponse(new [] { successSms, failedSms })
                 },
                 {
                     typeof(IEnumerable<Record>),
-                    new []
-                    {
-                        DataManager.CreateRecord(DateTime.UtcNow.Date, germany, 42),
-                        DataManager.CreateRecord(DateTime.UtcNow.Date.AddDays(-1), austria, 13)
-                    }
+                    new [] { germanyRecord, austriaRecord }
                 }
             });
 
