@@ -11,18 +11,15 @@ namespace SendSMS.BusinessLogic
 
         #region CountriesController
 
-        public static IEnumerable<Country> GetCountries(IEnumerable<Data.Country> countries)
-        {
-            return countries.Select(CreateInfo);
-        }
+        public static IEnumerable<Country> GetCountries() => Data.DataProvider.GetCountries().Select(CreateInfo);
 
         #endregion CountriesController
 
         #region SMSController
 
-        public static Data.State SendSMS(string from, string to, string text, Data.Context db)
+        public static Data.State SendSMS(string from, string to, string text)
         {
-            Data.Country country = IdentifyCountry(to, db.Countries);
+            Data.Country country = IdentifyCountry(to);
 
             var state = Data.State.Failed;
             if (country != null)
@@ -30,15 +27,14 @@ namespace SendSMS.BusinessLogic
                 state = SMSSender.SendSMS(from, to, country.MobileCode, text);
             }
 
-            Data.SMS sms = CreateSMS(from, to, country, state);
-            Data.ContextHelper.AddSMS(sms, db);
+            Data.DataProvider.AddSMS(from, to, country, state, DateTime.UtcNow);
             return state;
         }
 
-        public static GetSentSMSResponse GetSentSMS(DateTime? dateTimeFrom, DateTime? dateTimeTo, int skip, int? take,
-                                                    IEnumerable<Data.SMS> sms)
+        public static GetSentSMSResponse GetSentSMS(DateTime? from, DateTime? to, int skip, int? take)
         {
-            IEnumerable<Data.SMS> records = sms.Where(s => s.SentTime.IsBetween(dateTimeFrom, dateTimeTo)).Skip(skip);
+            IEnumerable<Data.SMS> records =
+                Data.DataProvider.GetSentSMS().Where(s => s.SentTime.IsBetween(from, to)).Skip(skip);
             if (take.HasValue)
             {
                 records = records.Take(take.Value);
@@ -51,27 +47,28 @@ namespace SendSMS.BusinessLogic
 
         #region StatisticsController
 
-        public static IEnumerable<Record> GetStatistics(DateTime? dateFrom, DateTime? dateTo, string mccList,
-                                                        IEnumerable<Data.SMS> sms, IEnumerable<Data.Country> countries)
+        public static IEnumerable<Record> GetStatistics(DateTime? from, DateTime? to, string mccList)
         {
             List<short> codes = mccList?.Split(',').Select(short.Parse).ToList();
 
-            return sms.Where(message => message.MobileCountryCode.HasValue
-                                        && message.SentTime.Date.IsBetween(dateFrom?.Date, dateTo?.Date)
-                                        && codes.ContainsIfPresent(message.MobileCountryCode.Value))
-                      .Join(countries,
-                            message => message.MobileCountryCode.Value, country => country.MobileCode,
-                            (message, country) => new { message.SentTime.Date, country })
-                      .GroupBy(pair => new { pair.Date, pair.country }, pair => true)
-                      .Select(g => CreateRecord(g.Key.Date, g.Key.country, g.Count()));
+            return
+                Data.DataProvider.GetSentSMS().Where(message => message.MobileCountryCode.HasValue
+                                                                && message.SentTime.Date.IsBetween(from?.Date, to?.Date)
+                                                                && codes.ContainsIfPresent(message.MobileCountryCode.Value))
+                                              .Join(Data.DataProvider.GetCountries(),
+                                                    message => message.MobileCountryCode.Value, country => country.MobileCode,
+                                                    (message, country) => new { message.SentTime.Date, country })
+                                              .GroupBy(pair => new { pair.Date, pair.country }, pair => true)
+                                              .Select(g => CreateRecord(g.Key.Date, g.Key.country, g.Count()));
         }
 
         #endregion StatisticsController
 
         #region Helpers
 
-        private static Data.Country IdentifyCountry(string number, IEnumerable<Data.Country> countries)
+        private static Data.Country IdentifyCountry(string number)
         {
+            IEnumerable<Data.Country> countries = Data.DataProvider.GetCountries();
             return countries.FirstOrDefault(c => number.StartsWith($"+{c.Code}", StringComparison.Ordinal));
         }
 
@@ -85,20 +82,7 @@ namespace SendSMS.BusinessLogic
             return (collection == null) || (collection.Count == 0) || collection.Contains(element);
         }
 
-        private static Data.SMS CreateSMS(string from, string to, Data.Country country, Data.State state)
-        {
-            return new Data.SMS
-            {
-                From = from,
-                To = to,
-                MobileCountryCode = country?.MobileCode,
-                Price = country?.PricePerSMS,
-                State = state,
-                SentTime = DateTime.UtcNow
-            };
-        }
-
-        public static SMS CreateInfo(Data.SMS sms) => new SMS
+        private static SMS CreateInfo(Data.SMS sms) => new SMS
         {
             DateTime = sms.SentTime.ToString("yyyy-MM-ddTHH:mm:ss"),
             From = sms.From,

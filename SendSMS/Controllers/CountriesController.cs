@@ -7,13 +7,11 @@ namespace SendSMS.Controllers
 {
     public class CountriesController : ApiController
     {
-        private readonly Data.Context _db = new Data.Context();
-
         // GET: countries.json
         // GET: countries.xml
         /// <summary>
         /// Gets the countries list.
         /// </summary>
-        public IEnumerable<Country> GetCountries() => DataManager.GetCountries(_db.Countries);
+        public IEnumerable<Country> GetCountries() => DataManager.GetCountries();
     }
 }

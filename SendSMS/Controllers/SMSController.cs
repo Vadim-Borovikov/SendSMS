@@ -7,8 +7,6 @@ namespace SendSMS.Controllers
 {
     public class SMSController : ApiController
     {
-        private readonly Data.Context _db = new Data.Context();
-
         // GET: sms/send.json?from=The+Sender&to=%2B4917421293388&text=Hello+World
         // GET: sms/send.xml?from=The+Sender&to=%2B4917421293388&text=Hello+World
         /// <summary>
@@ -19,7 +17,7 @@ namespace SendSMS.Controllers
         /// <param name="text">The text which should be sent.</param>
         /// <returns>The SMS sending state.</returns>
         [HttpGet]
-        public Data.State SendSMS(string from, string to, string text) => DataManager.SendSMS(from, to, text, _db);
+        public Data.State SendSMS(string from, string to, string text) => DataManager.SendSMS(from, to, text);
 
         // GET: /sms/sent.json?dateTimeFrom=2015-03-01T11:30:20&dateTimeTo=2015-03-02T09:20:22&skip=100&take=50
         // GET: /sms/sent.xml?dateTimeFrom=2015-03-01T11:30:20&dateTimeTo=2015-03-02T09:20:22&skip=100&take=50
@@ -34,7 +32,7 @@ namespace SendSMS.Controllers
         public GetSentSMSResponse GetSentSMS(DateTime? dateTimeFrom = null, DateTime? dateTimeTo = null, int skip = 0,
                                              int? take = null)
         {
-            return DataManager.GetSentSMS(dateTimeFrom, dateTimeTo, skip, take, _db.SentSMS);
+            return DataManager.GetSentSMS(dateTimeFrom, dateTimeTo, skip, take);
         }
     }
 }
