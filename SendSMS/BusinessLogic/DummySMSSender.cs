@@ -5,7 +5,7 @@ using SendSMS.Data;
 
 namespace SendSMS.BusinessLogic
 {
-    public class DummySMSSender : ISMSSender
+    internal class DummySMSSender : ISMSSender
     {
         public State SendSMS(string from, string to, short mobileCountryCode, string text)
         {

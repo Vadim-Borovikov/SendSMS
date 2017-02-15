@@ -2,7 +2,7 @@
 
 namespace SendSMS.BusinessLogic
 {
-    public interface ISMSSender
+    internal interface ISMSSender
     {
         State SendSMS(string from, string to, short mobileCountryCode, string text);
     }
