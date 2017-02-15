@@ -9,13 +9,7 @@ namespace SendSMS.BusinessLogic
     {
         private static readonly ISMSSender SMSSender = new DummySMSSender();
 
-        #region CountriesController
-
-        public static IEnumerable<Country> GetCountries() => Data.DataProvider.GetCountries().Select(CreateInfo);
-
-        #endregion CountriesController
-
-        #region SMSController
+        #region Required methods
 
         public static Data.State SendSMS(string from, string to, string text)
         {
@@ -31,6 +25,8 @@ namespace SendSMS.BusinessLogic
             return state;
         }
 
+        public static IEnumerable<Country> GetCountries() => Data.DataProvider.GetCountries().Select(CreateInfo);
+
         public static GetSentSMSResponse GetSentSMS(DateTime? from, DateTime? to, int skip, int? take)
         {
             IEnumerable<Data.SMS> records =
@@ -42,10 +38,6 @@ namespace SendSMS.BusinessLogic
             List<SMS> smsInfos = records.Select(CreateInfo).ToList();
             return CreateGetSentSMSResponse(smsInfos);
         }
-
-        #endregion SMSController
-
-        #region StatisticsController
 
         public static IEnumerable<Record> GetStatistics(DateTime? from, DateTime? to, string mccList)
         {
@@ -62,7 +54,7 @@ namespace SendSMS.BusinessLogic
                       .Select(g => CreateRecord(g.Key.Date, g.Key.country, g.Count()));
         }
 
-        #endregion StatisticsController
+        #endregion Required methods
 
         #region Helpers
 
