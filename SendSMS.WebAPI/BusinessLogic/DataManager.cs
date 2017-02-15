@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using SendSMS.Models;
 
-namespace SendSMS.BusinessLogic
+namespace SendSMS.WebAPI.BusinessLogic
 {
-    public static class DataManager
+    internal static class DataManager
     {
         private static readonly ISMSSender SMSSender = new DummySMSSender();
 
@@ -49,17 +49,17 @@ namespace SendSMS.BusinessLogic
 
         public static IEnumerable<Record> GetStatistics(DateTime? from, DateTime? to, string mccList)
         {
-            IEnumerable<Data.SMS> sms = Data.DataProvider.GetSentSMS();
             List<short> codes = mccList?.Split(',').Select(short.Parse).ToList();
 
-            return sms.Where(message => message.MobileCountryCode.HasValue
-                                        && message.SentTime.Date.IsBetween(from?.Date, to?.Date)
-                                        && codes.ContainsIfPresent(message.MobileCountryCode.Value))
-                      .Join(Data.DataProvider.GetCountries(),
-                            message => message.MobileCountryCode.Value, country => country.MobileCode,
-                            (message, country) => new { message.SentTime.Date, country })
-                      .GroupBy(pair => new { pair.Date, pair.country }, pair => true)
-                      .Select(g => CreateRecord(g.Key.Date, g.Key.country, g.Count()));
+            return
+                Data.DataProvider.GetSentSMS().Where(message => message.MobileCountryCode.HasValue
+                                                                && message.SentTime.Date.IsBetween(from?.Date, to?.Date)
+                                                                && codes.ContainsIfPresent(message.MobileCountryCode.Value))
+                                              .Join(Data.DataProvider.GetCountries(),
+                                                    message => message.MobileCountryCode.Value, country => country.MobileCode,
+                                                    (message, country) => new { message.SentTime.Date, country })
+                                              .GroupBy(pair => new { pair.Date, pair.country }, pair => true)
+                                              .Select(g => CreateRecord(g.Key.Date, g.Key.country, g.Count()));
         }
 
         #endregion StatisticsController
