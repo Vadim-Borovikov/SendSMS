@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SendSMS.Models;
+using SendSMS.WebAPI.Models;
 
 namespace SendSMS.WebAPI.BusinessLogic
 {

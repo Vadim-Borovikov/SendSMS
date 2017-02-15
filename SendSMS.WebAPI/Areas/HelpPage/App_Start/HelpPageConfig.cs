@@ -12,8 +12,8 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Web;
 using System.Web.Http;
-using SendSMS.BusinessLogic;
-using SendSMS.Models;
+using SendSMS.WebAPI.BusinessLogic;
+using SendSMS.WebAPI.Models;
 
 #if Handle_PageResultOfT
 using System.Web.Http.OData;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Http;
-using SendSMS.BusinessLogic;
-using SendSMS.Models;
+using SendSMS.WebAPI.BusinessLogic;
+using SendSMS.WebAPI.Models;
 
 namespace SendSMS.WebAPI.Controllers
 {

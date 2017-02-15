@@ -268,10 +268,6 @@
       <Project>{9fa102a5-8d41-484c-a863-351bc9814445}</Project>
       <Name>SendSMS.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SendSMS\SendSMS.csproj">
-      <Project>{9653f97f-da93-482e-9b39-c7fbb8dd0a1b}</Project>
-      <Name>SendSMS</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
