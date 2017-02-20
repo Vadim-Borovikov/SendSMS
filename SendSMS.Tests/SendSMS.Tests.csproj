@@ -64,10 +64,14 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="UnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SendSMS.Data\SendSMS.Data.csproj">
+      <Project>{9fa102a5-8d41-484c-a863-351bc9814445}</Project>
+      <Name>SendSMS.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SendSMS.ServiceInterface\SendSMS.ServiceInterface.csproj">
       <Project>{801a0f89-d5f6-49a6-bcea-6624388c98a4}</Project>
       <Name>SendSMS.ServiceInterface</Name>
@@ -76,9 +80,20 @@
       <Project>{53E82AC1-DD1D-4C66-B55F-F9F4ACFB2F40}</Project>
       <Name>SendSMS.ServiceModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SendSMS\SendSMS.csproj">
+      <Project>{4389B305-B381-4B50-B1A8-BBB5259A0524}</Project>
+      <Name>SendSMS</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="App.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>App.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>App.config</DependentUpon>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

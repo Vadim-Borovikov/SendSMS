@@ -73,13 +73,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyServices.cs" />
+    <Compile Include="SendSmsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SendSMS.Data\SendSMS.Data.csproj">
+      <Project>{9FA102A5-8D41-484C-A863-351BC9814445}</Project>
+      <Name>SendSMS.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SendSMS.ServiceModel\SendSMS.ServiceModel.csproj">
       <Project>{53E82AC1-DD1D-4C66-B55F-F9F4ACFB2F40}</Project>
       <Name>SendSMS.ServiceModel</Name>
