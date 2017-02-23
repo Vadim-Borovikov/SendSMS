@@ -20,10 +20,7 @@ More detailed information and examples are available on Web.API help page once A
 - MySQL
 
 # Configure and install
-- At Visual Studio
-  - Open the _SendSMS.sln_ solution
-  - Replace connection string in _SendSMS.WabAPI_ project's _Web.config_ with a connection string to your MySql Data Base.
-  - Publish _SendSMS.WebAPI_.
-- At IIS Manager
+- Replace connection string in _Web.config_ with a connection string to your MySql Data Base.
+- At IIS Manager:
   - Create new Application Pool v4.0.
   - Add new Application on your site with this pool and path were project was published to.
