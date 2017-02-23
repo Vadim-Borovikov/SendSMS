@@ -4,6 +4,12 @@ The data is stored in a relational database.
 During send an SMS the mobile country code of the receiver will be identified and stored within the SMS record.
 This service is able to return the responses in JSON and XML formats.
 
+# Configure and install
+- Replace connection string in _Web.config_ with a connection string to your MySql Data Base.
+- At IIS Manager:
+  - Create new Application Pool v4.0.
+  - Add new Application on your site with this pool and path were project was published to.
+
 # Services
 Service | Example | Description
 --- | --- | ---
@@ -18,9 +24,3 @@ More detailed information and examples are available on Web.API help page once A
 - .NET Web API (Framework 4.5)
 - Entity Framework Code First
 - MySQL
-
-# Configure and install
-- Replace connection string in _Web.config_ with a connection string to your MySql Data Base.
-- At IIS Manager:
-  - Create new Application Pool v4.0.
-  - Add new Application on your site with this pool and path were project was published to.
