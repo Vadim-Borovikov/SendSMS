@@ -40,5 +40,5 @@ To make it actually work, one should add an `ISMSSender` implementation and repl
 - Since DB SMS price should have 3 decimals, I needed to adjust DB decimal format. Since I decided follow the Code First approach, it took a dedicated NuGet package (EFAttributeConfig) to make an annotation required.
 - API SMS price, on the other hand, should have 2 decimals, and I have no idea how real-world companies compute their bills, so I just `Math.Round` prices for single text and for statistics record.
 - .json/.xml extensions for associated result formats in Web.API weren't obvious for me. I did it with `config.Formatters.JsonFormatter.AddUriPathExtensionMapping` in `WebApiConfig` after some research.
-- Unfortunatelly not all LINQ features can be automatically translated to SQL, so it took me some time to make all LINQ to Entities requests work (GetStatistics was especially tricky!).
-- I never used an IoC-container before, so I studied Unity to inject ISMSSender implementation via web.config.
+- Unfortunatelly not all LINQ features can be automatically translated to SQL, so it took me some time to make all LINQ to Entities requests work (`GetStatistics` was especially tricky!).
+- I never used an IoC-container before, so I studied Unity to inject `ISMSSender` implementation via web.config.
