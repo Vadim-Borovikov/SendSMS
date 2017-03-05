@@ -8,8 +8,6 @@ namespace SendSMS.WebAPI.BusinessLogic
 {
     internal static class DataManager
     {
-        private static readonly ISMSSender SMSSender = new DummySMSSender();
-
         #region CountriesController
 
         public static async Task<List<Country>> GetCountriesAsync()
@@ -22,14 +20,14 @@ namespace SendSMS.WebAPI.BusinessLogic
 
         #region SMSController
 
-        public static async Task<Data.State> SendSMSAsync(string from, string to, string text)
+        public static async Task<Data.State> SendSMSAsync(string from, string to, string text, ISMSSender smsSender)
         {
             Data.Country country = await Data.DataProvider.IdentifyCountry(to);
 
             var state = Data.State.Failed;
             if (country != null)
             {
-                state = await SMSSender.SendSMSAsync(from, to, country.MobileCode, text);
+                state = await smsSender.SendSMSAsync(from, to, country.MobileCode, text);
             }
 
             int saved = await Data.DataProvider.AddSMSAsync(from, to, country, state, DateTime.UtcNow);

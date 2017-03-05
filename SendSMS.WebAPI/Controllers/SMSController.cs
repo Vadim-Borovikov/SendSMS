@@ -8,6 +8,13 @@ namespace SendSMS.WebAPI.Controllers
 {
     public class SMSController : ApiController
     {
+        private readonly ISMSSender _smsSender;
+
+        public SMSController(ISMSSender smsSender)
+        {
+            _smsSender = smsSender;
+        }
+
         // GET: sms/send.json?from=The+Sender&to=%2B4917421293388&text=Hello+World
         // GET: sms/send.xml?from=The+Sender&to=%2B4917421293388&text=Hello+World
         /// <summary>
@@ -20,7 +27,7 @@ namespace SendSMS.WebAPI.Controllers
         [HttpGet]
         public async Task<Data.State> SendSMSAsync(string from, string to, string text)
         {
-            return await DataManager.SendSMSAsync(from, to, text);
+            return await DataManager.SendSMSAsync(from, to, text, _smsSender);
         }
 
         // GET: /sms/sent.json?dateTimeFrom=2015-03-01T11:30:20&dateTimeTo=2015-03-02T09:20:22&skip=100&take=50
