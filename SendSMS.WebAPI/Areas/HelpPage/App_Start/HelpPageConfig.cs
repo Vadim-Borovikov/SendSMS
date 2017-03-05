@@ -64,8 +64,18 @@ namespace SendSMS.WebAPI.Areas.HelpPage
                 To = "+8800807775533"
             };
 
-            var germanyRecord = DataManager.CreateRecord(DateTime.UtcNow.Date, germany, 42);
-            var austriaRecord = DataManager.CreateRecord(DateTime.UtcNow.Date.AddDays(-1), austria, 13);
+            Record germanyRecord = DataManager.CreateRecord(new Data.Record
+            {
+                Day = DateTime.UtcNow.Date,
+                Country = germany,
+                Count = 42
+            });
+            Record austriaRecord = DataManager.CreateRecord(new Data.Record
+            {
+                Day = DateTime.UtcNow.Date.AddDays(-1),
+                Country = austria,
+                Count = 13
+            });
 
             config.SetSampleObjects(new Dictionary<Type, object>
             {

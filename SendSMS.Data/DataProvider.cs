@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SendSMS.Data
 {
@@ -10,48 +11,54 @@ namespace SendSMS.Data
         private static readonly Context DB = new Context();
 
         #region Public methods
-        public static IEnumerable<Country> GetCountries() => DB.Countries;
 
-        public static Country IdentifyCountry(string number)
+        public static async Task<List<Country>> GetCountriesAsync() => await DB.Countries.ToListAsync();
+
+        public static async Task<Country> IdentifyCountry(string number)
         {
-            return GetCountries().FirstOrDefault(c => number.StartsWith($"+{c.Code}", StringComparison.Ordinal));
+            // ReSharper disable once StringStartsWithIsCultureSpecific
+            return await DB.Countries.FirstOrDefaultAsync(c => number.StartsWith("+" + c.Code));
         }
 
-        public static void AddSMS(string from, string to, Country country, State state, DateTime sentTime)
+        public static async Task<int> AddSMSAsync(string from, string to, Country country, State state, DateTime sentTime)
         {
             SMS sms = CreateSMS(from, to, country, state, sentTime);
-            AddSMS(sms);
+            return await AddSMSAsync(sms);
         }
 
-        public static IEnumerable<SMS> GetSentSMS(DateTime? from, DateTime? to, int skip, int? take)
+        public static async Task<List<SMS>> GetSentSMSAsync(DateTime? from, DateTime? to, int skip, int? take)
         {
-            IEnumerable<SMS> sms = GetSentSMS(from, to).Skip(skip);
+            IQueryable<SMS> sms = GetSentSMS(from, to).OrderBy(s => s.SentTime).Skip(skip);
             if (take.HasValue)
             {
                 sms = sms.Take(take.Value);
             }
-            return sms;
+            return await sms.ToListAsync();
         }
 
-        public static IEnumerable<Tuple<DateTime, Country, int>> GetStatistics(DateTime? from, DateTime? to,
-                                                                               List<short> codes)
+        public static async Task<List<Record>> GetStatisticsAsync(DateTime? from, DateTime? to, List<short> codes)
         {
-            return GetSentSMS(from, to).Where(s => s.MobileCountryCode.HasValue
-                                                   && ContainsIfPresent(codes, s.MobileCountryCode.Value))
-                                       .Join(GetCountries(),
-                                             s => s.MobileCountryCode.Value, country => country.MobileCode,
-                                             (s, c) => new { s.SentTime.Date, Country = c })
-                                       .GroupBy(pair => new { pair.Date, pair.Country }, pair => true)
-                                       .Select(g => new Tuple<DateTime, Country, int>(g.Key.Date, g.Key.Country, g.Count()));
+            if (codes == null)
+            {
+                codes = new List<short>();
+            }
+            return await GetSentSMS(from, to).Where(s => s.MobileCountryCode.HasValue
+                                                         && ((codes.Count == 0) || codes.Contains(s.MobileCountryCode.Value)))
+                                             .Join(DB.Countries,
+                                                   s => s.MobileCountryCode.Value, country => country.MobileCode,
+                                                   (s, c) => new { Date = DbFunctions.TruncateTime(s.SentTime).Value, Country = c })
+                                             .GroupBy(pair => new { pair.Date, pair.Country }, pair => true)
+                                             .Select(g => new Record { Day = g.Key.Date, Country = g.Key.Country, Count = g.Count() })
+                                             .ToListAsync();
         }
         #endregion Public methods
 
         #region Helpers
-        private static void AddSMS(SMS sms)
+        private static Task<int> AddSMSAsync(SMS sms)
         {
             DB.SentSMS.Add(sms);
             DB.Entry(sms).State = EntityState.Added;
-            DB.SaveChanges();
+            return DB.SaveChangesAsync();
         }
 
         private static SMS CreateSMS(string from, string to, Country country, State state, DateTime sentTime)
@@ -67,9 +74,9 @@ namespace SendSMS.Data
             };
         }
 
-        private static IEnumerable<SMS> GetSentSMS(DateTime? from, DateTime? to)
+        private static IQueryable<SMS> GetSentSMS(DateTime? from, DateTime? to)
         {
-            IEnumerable<SMS> sms = DB.SentSMS;
+            IQueryable<SMS> sms = DB.SentSMS;
             if (from.HasValue)
             {
                 sms = sms.Where(s => s.SentTime >= from.Value);
@@ -79,11 +86,6 @@ namespace SendSMS.Data
                 sms = sms.Where(s => s.SentTime <= to.Value);
             }
             return sms;
-        }
-
-        private static bool ContainsIfPresent<T>(IReadOnlyCollection<T> collection, T element)
-        {
-            return (collection == null) || (collection.Count == 0) || collection.Contains(element);
         }
         #endregion Helpers
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using SendSMS.WebAPI.BusinessLogic;
 using SendSMS.WebAPI.Models;
@@ -17,10 +18,10 @@ namespace SendSMS.WebAPI.Controllers
         /// <param name="dateTo">The latest date to look.</param>
         /// <param name="mccList">A list of mobile country codes to filter, e.g. "262,232".
         /// If list is empty this means: include all mobile country codes.</param>
-        public IEnumerable<Record> GetStatistics(DateTime? dateFrom = null, DateTime? dateTo = null,
-                                                 string mccList = null)
+        public async Task<List<Record>> GetStatisticsAsync(DateTime? dateFrom = null, DateTime? dateTo = null,
+                                                           string mccList = null)
         {
-            return DataManager.GetStatistics(dateFrom, dateTo, mccList);
+            return await DataManager.GetStatisticsAsync(dateFrom, dateTo, mccList);
         }
     }
 }
