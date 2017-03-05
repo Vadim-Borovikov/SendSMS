@@ -10,6 +10,9 @@ namespace SendSMS.Data
             db.Countries.Add(new Country { Name = "Austria", MobileCode = 232, Code = 43, PricePerSMS = 0.053m });
             db.Countries.Add(new Country { Name = "Poland", MobileCode = 260, Code = 48, PricePerSMS = 0.032m });
 
+            db.Database.ExecuteSqlCommand(@"Create FUNCTION TruncateTime(dateValue DateTime) RETURNS date
+                                          return Date(dateValue);");
+
             base.Seed(db);
         }
     }

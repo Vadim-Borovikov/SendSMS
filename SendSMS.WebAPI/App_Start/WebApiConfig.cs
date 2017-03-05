@@ -36,7 +36,7 @@ namespace SendSMS.WebAPI
             config.Routes.MapHttpRoute(
                 name: "Send SMS",
                 routeTemplate: "sms/send.{ext}",
-                defaults: new { controller = "sms", action = "SendSMS" },
+                defaults: new { controller = "sms", action = "SendSMSAsync" },
                 constraints: new
                 {
                     ext = new RegexRouteConstraint(ExtRegexPattern)
@@ -46,7 +46,7 @@ namespace SendSMS.WebAPI
             config.Routes.MapHttpRoute(
                 name: "Sent SMS",
                 routeTemplate: "sms/sent.{ext}",
-                defaults: new { controller = "sms", action = "GetSentSMS" },
+                defaults: new { controller = "sms", action = "GetSentSMSAsync" },
                 constraints: new
                 {
                     ext = new RegexRouteConstraint(ExtRegexPattern)

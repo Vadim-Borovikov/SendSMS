@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using SendSMS.WebAPI.Models;
 
 namespace SendSMS.WebAPI.BusinessLogic
@@ -11,33 +12,33 @@ namespace SendSMS.WebAPI.BusinessLogic
 
         #region CountriesController
 
-        public static IEnumerable<Country> GetCountries()
+        public static async Task<List<Country>> GetCountriesAsync()
         {
-            List<Data.Country> countries = Data.DataProvider.GetCountries().ToList();
-            return countries.Select(CreateInfo);
+            List<Data.Country> countries = await Data.DataProvider.GetCountriesAsync();
+            return countries.Select(CreateInfo).ToList();
         }
 
         #endregion CountriesController
 
         #region SMSController
 
-        public static Data.State SendSMS(string from, string to, string text)
+        public static async Task<Data.State> SendSMSAsync(string from, string to, string text)
         {
-            Data.Country country = Data.DataProvider.IdentifyCountry(to);
+            Data.Country country = await Data.DataProvider.IdentifyCountry(to);
 
             var state = Data.State.Failed;
             if (country != null)
             {
-                state = SMSSender.SendSMS(from, to, country.MobileCode, text);
+                state = await SMSSender.SendSMSAsync(from, to, country.MobileCode, text);
             }
 
-            Data.DataProvider.AddSMS(from, to, country, state, DateTime.UtcNow);
-            return state;
+            int saved = await Data.DataProvider.AddSMSAsync(from, to, country, state, DateTime.UtcNow);
+            return saved > 0 ? state : Data.State.Failed;
         }
 
-        public static GetSentSMSResponse GetSentSMS(DateTime? from, DateTime? to, int skip, int? take)
+        public static async Task<GetSentSMSResponse> GetSentSMSAsync(DateTime? from, DateTime? to, int skip, int? take)
         {
-            List<Data.SMS> records = Data.DataProvider.GetSentSMS(from, to, skip, take).ToList();
+            List<Data.SMS> records = await Data.DataProvider.GetSentSMSAsync(from, to, skip, take);
             List<SMS> smsInfos = records.Select(CreateInfo).ToList();
             return CreateGetSentSMSResponse(smsInfos);
         }
@@ -46,12 +47,11 @@ namespace SendSMS.WebAPI.BusinessLogic
 
         #region StatisticsController
 
-        public static IEnumerable<Record> GetStatistics(DateTime? from, DateTime? to, string mccList)
+        public static async Task<List<Record>> GetStatisticsAsync(DateTime? from, DateTime? to, string mccList)
         {
             List<short> codes = mccList?.Split(',').Select(short.Parse).ToList();
-            List<Tuple<DateTime, Data.Country, int>> records =
-                Data.DataProvider.GetStatistics(from, to, codes).ToList();
-            return records.Select(r => CreateRecord(r.Item1, r.Item2, r.Item3));
+            List<Data.Record> records = await Data.DataProvider.GetStatisticsAsync(from, to, codes);
+            return records.Select(CreateRecord).ToList();
         }
 
         #endregion StatisticsController
@@ -85,13 +85,13 @@ namespace SendSMS.WebAPI.BusinessLogic
             };
         }
 
-        public static Record CreateRecord(DateTime day, Data.Country country, int smsCount) => new Record
+        public static Record CreateRecord(Data.Record record) => new Record
         {
-            Day = day.ToString("yyyy-MM-dd"),
-            MobileCountryCode = country.MobileCode.ToString(),
-            PricePerSMS = Math.Round(country.PricePerSMS, 2),
-            Count = smsCount,
-            TotalPrice = Math.Round(country.PricePerSMS * smsCount, 2)
+            Day = record.Day.ToString("yyyy-MM-dd"),
+            MobileCountryCode = record.Country.MobileCode.ToString(),
+            PricePerSMS = Math.Round(record.Country.PricePerSMS, 2),
+            Count = record.Count,
+            TotalPrice = Math.Round(record.Country.PricePerSMS * record.Count, 2)
         };
 
         #endregion Helpers

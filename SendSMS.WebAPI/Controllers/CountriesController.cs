@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using SendSMS.WebAPI.BusinessLogic;
 using SendSMS.WebAPI.Models;
@@ -12,6 +13,6 @@ namespace SendSMS.WebAPI.Controllers
         /// <summary>
         /// Gets the countries list.
         /// </summary>
-        public IEnumerable<Country> GetCountries() => DataManager.GetCountries();
+        public async Task<List<Country>> GetCountriesAsync() => await DataManager.GetCountriesAsync();
     }
 }
