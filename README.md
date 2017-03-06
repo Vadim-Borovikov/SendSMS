@@ -5,8 +5,9 @@ During send an SMS the mobile country code of the receiver will be identified an
 This service is able to return the responses in JSON and XML formats.
 
 # Configure and install
-- Replace connection string in _Web.config_ with a connection string to your MySql Data Base.
-- Replace LogFilePath's value in _Web.config_ with a desired path for the SMS log file in a existing folder.
+- In _Web.config_:
+  - Set up the connection string with respect to your MySql Data Base.
+  - Replace LogFilePath's value with a desired path for the SMS log file in a existing folder.
 - At IIS Manager:
   - Create new Application Pool v4.0.
   - Add new Application on your site with this pool and path where project was downloaded/published to.
