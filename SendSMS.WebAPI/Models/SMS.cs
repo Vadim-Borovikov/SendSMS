@@ -1,4 +1,6 @@
+using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace SendSMS.WebAPI.Models
 {
@@ -11,8 +13,9 @@ namespace SendSMS.WebAPI.Models
         /// <summary>
         /// The date and time the SMS was sent, format: "yyyy-MM-ddTHH:mm:ss", UTC.
         /// </summary>
-        [DataMember(Name = "dataTime", Order = 1)]
-        public string DateTime { get; set; }
+        [DataMember(Name = "dateTime", Order = 1)]
+        [JsonConverter(typeof(CustomDateTimeConverter))]
+        public DateTime DateTime { get; set; }
 
         /// <summary>
         /// The sender of the SMS.

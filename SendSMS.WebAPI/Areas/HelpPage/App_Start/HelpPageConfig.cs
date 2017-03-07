@@ -39,15 +39,12 @@ namespace SendSMS.WebAPI.Areas.HelpPage
             // Uncomment the following to use the documentation from XML documentation file.
             config.SetDocumentationProvider(new XmlDocumentationProvider(HttpContext.Current.Server.MapPath("~/bin/XmlDocument.xml")));
 
-            const string DateFormat = "yyyy-MM-dd";
-            string dateTimeFormat = $"{DateFormat}THH:mm:ss";
-
             var germany = new Data.Country { MobileCode = 262, Code = 49, Name = "Germany", PricePerSMS = 0.055m };
             var austria = new Data.Country { MobileCode = 232, Code = 43, Name = "Austria", PricePerSMS = 0.053m };
 
             var successSms = new SMS
             {
-                DateTime = DateTime.UtcNow.Date.ToString(dateTimeFormat),
+                DateTime = GetTruncatedDate(DateTime.UtcNow.Date),
                 From = "The Sender",
                 MobileCountryCode = "49",
                 Price = 0.06m,
@@ -56,7 +53,7 @@ namespace SendSMS.WebAPI.Areas.HelpPage
             };
             var failedSms = new SMS
             {
-                DateTime = DateTime.UtcNow.ToString(dateTimeFormat),
+                DateTime = GetTruncatedDate(DateTime.UtcNow),
                 From = "Goofy",
                 MobileCountryCode = "",
                 Price = 0m,
@@ -85,7 +82,7 @@ namespace SendSMS.WebAPI.Areas.HelpPage
                 },
                 {
                     typeof(GetSentSMSResponse),
-                    DataManager.CreateGetSentSMSResponse(new [] { successSms, failedSms })
+                    DataManager.CreateGetSentSMSResponse(new List<SMS> { successSms, failedSms })
                 },
                 {
                     typeof(IEnumerable<Record>),
@@ -126,6 +123,11 @@ namespace SendSMS.WebAPI.Areas.HelpPage
             //// Uncomment the following to correct the sample response when the action returns an HttpResponseMessage with ObjectContent<string>.
             //// The sample will be generated as if the controller named "Values" and action named "Post" were returning a string.
             //config.SetActualResponseType(typeof(string), "Values", "Post");
+        }
+
+        private static DateTime GetTruncatedDate(DateTime dateTime)
+        {
+            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, dateTime.Hour, dateTime.Minute, dateTime.Second);
         }
 
 #if Handle_PageResultOfT

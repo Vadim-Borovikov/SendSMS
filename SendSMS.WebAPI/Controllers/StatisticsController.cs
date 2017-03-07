@@ -14,11 +14,12 @@ namespace SendSMS.WebAPI.Controllers
         /// <summary>
         /// Gets the statistics for days and counties.
         /// </summary>
-        /// <param name="dateFrom">The earliest date to look.</param>
-        /// <param name="dateTo">The latest date to look.</param>
+        /// <param name="dateFrom">The earliest date to look. Format: “yyyy-MM-dd”</param>
+        /// <param name="dateTo">The latest date to look. Format: “yyyy-MM-dd”</param>
         /// <param name="mccList">A list of mobile country codes to filter, e.g. "262,232".
         /// If list is empty this means: include all mobile country codes.</param>
-        public async Task<List<Record>> GetStatisticsAsync(DateTime? dateFrom = null, DateTime? dateTo = null,
+        public async Task<List<Record>> GetStatisticsAsync([DateTimeParameter(Format = "yyyy-MM-dd")] DateTime? dateFrom = null,
+                                                           [DateTimeParameter(Format = "yyyy-MM-dd")] DateTime? dateTo = null,
                                                            string mccList = null)
         {
             return await DataManager.GetStatisticsAsync(dateFrom, dateTo, mccList);

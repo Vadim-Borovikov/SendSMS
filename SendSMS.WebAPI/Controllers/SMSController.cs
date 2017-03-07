@@ -35,13 +35,13 @@ namespace SendSMS.WebAPI.Controllers
         /// <summary>
         /// Gets the SMS sent earlier.
         /// </summary>
-        /// <param name="dateTimeFrom">The earliest date and time to look. UTC.</param>
-        /// <param name="dateTimeTo">The latest date time to look. UTC.</param>
+        /// <param name="dateTimeFrom">The earliest date and time to look. Format: “yyyy-MM-ddTHH:mm:ss”, UTC.</param>
+        /// <param name="dateTimeTo">The latest date time to look. Format: “yyyy-MM-ddTHH:mm:ss”, UTC.</param>
         /// <param name="skip">The number of records to skip.</param>
         /// <param name="take">The number of records to take.</param>
         /// <returns>The suitable records and their total count.</returns>
-        public async Task<GetSentSMSResponse> GetSentSMSAsync(DateTime? dateTimeFrom = null,
-                                                              DateTime? dateTimeTo = null,
+        public async Task<GetSentSMSResponse> GetSentSMSAsync([DateTimeParameter(Format = "yyyy-MM-ddTHH:mm:ss")] DateTime? dateTimeFrom = null,
+                                                              [DateTimeParameter(Format = "yyyy-MM-ddTHH:mm:ss")] DateTime? dateTimeTo = null,
                                                               int skip = 0, int? take = null)
         {
             return await DataManager.GetSentSMSAsync(dateTimeFrom, dateTimeTo, skip, take);

@@ -19,6 +19,6 @@ namespace SendSMS.WebAPI.Models
         /// The items matching the filter.
         /// </summary>
         [DataMember(Name = "items", Order = 2)]
-        public IEnumerable<SMS> Items { get; set; }
+        public List<SMS> Items { get; set; }
     }
 }

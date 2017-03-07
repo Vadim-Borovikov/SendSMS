@@ -1,4 +1,7 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace SendSMS.WebAPI.Models
 {
@@ -12,7 +15,9 @@ namespace SendSMS.WebAPI.Models
         /// The date. Format: "yyyy-MM-dd".
         /// </summary>
         [DataMember(Name = "day", Order = 1)]
-        public string Day { get; set; }
+        [JsonConverter(typeof(CustomDateConverter))]
+        [XmlElement(DataType="date")]
+        public DateTime Day { get; set; }
 
         /// <summary>
         /// The mobile country code.

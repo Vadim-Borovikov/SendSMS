@@ -172,6 +172,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Models\CustomDateTimeConverter.cs" />
+    <Compile Include="Models\CustomDateConverter.cs" />
+    <Compile Include="Models\DateTimeValueProvider.cs" />
+    <Compile Include="Models\DateTimeValueProviderFactory.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityResolver.cs" />
@@ -205,6 +209,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\CountriesController.cs" />
+    <Compile Include="Models\DateTimeParameterAttribute.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Models\GetSentSMSResponse.cs" />
     <Compile Include="Controllers\SMSController.cs" />

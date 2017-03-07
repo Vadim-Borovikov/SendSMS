@@ -20,29 +20,19 @@ namespace SendSMS.WebAPI
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "Countries",
-                routeTemplate: "countries.{ext}",
-                defaults: new { controller = "countries" },
-                constraints: new
-                {
-                    ext = new RegexRouteConstraint(ExtRegexPattern)
-                }
-            );
-
-            config.Routes.MapHttpRoute(
-                name: "Statistics",
-                routeTemplate: "statistics.{ext}",
-                defaults: new { controller = "statistics" },
-                constraints: new
-                {
-                    ext = new RegexRouteConstraint(ExtRegexPattern)
-                }
-            );
-
-            config.Routes.MapHttpRoute(
                 name: "Send SMS",
                 routeTemplate: "sms/send.{ext}",
                 defaults: new { controller = "sms", action = "SendSMSAsync" },
+                constraints: new
+                {
+                    ext = new RegexRouteConstraint(ExtRegexPattern)
+                }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "Countries",
+                routeTemplate: "countries.{ext}",
+                defaults: new { controller = "countries" },
                 constraints: new
                 {
                     ext = new RegexRouteConstraint(ExtRegexPattern)
@@ -59,8 +49,19 @@ namespace SendSMS.WebAPI
                 }
             );
 
+            config.Routes.MapHttpRoute(
+                name: "Statistics",
+                routeTemplate: "statistics.{ext}",
+                defaults: new { controller = "statistics" },
+                constraints: new
+                {
+                    ext = new RegexRouteConstraint(ExtRegexPattern)
+                }
+            );
+
             config.Formatters.JsonFormatter.AddUriPathExtensionMapping("json", "application/json");
             config.Formatters.XmlFormatter.AddUriPathExtensionMapping("xml", "text/xml");
+            config.Formatters.XmlFormatter.UseXmlSerializer = true;
         }
 
         private const string ExtRegexPattern = "^xml$|^json$";

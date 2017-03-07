@@ -58,7 +58,7 @@ namespace SendSMS.WebAPI.BusinessLogic
 
         private static SMS CreateInfo(Data.SMS sms) => new SMS
         {
-            DateTime = sms.SentTime.ToString("yyyy-MM-ddTHH:mm:ss"),
+            DateTime = sms.SentTime,
             From = sms.From,
             To = sms.To,
             MobileCountryCode = sms.MobileCountryCode?.ToString() ?? "",
@@ -74,7 +74,7 @@ namespace SendSMS.WebAPI.BusinessLogic
             PricePerSMS = Math.Round(country.PricePerSMS, 2)
         };
 
-        public static GetSentSMSResponse CreateGetSentSMSResponse(IReadOnlyCollection<SMS> items)
+        public static GetSentSMSResponse CreateGetSentSMSResponse(List<SMS> items)
         {
             return new GetSentSMSResponse
             {
@@ -85,7 +85,7 @@ namespace SendSMS.WebAPI.BusinessLogic
 
         public static Record CreateRecord(Data.Record record) => new Record
         {
-            Day = record.Day.ToString("yyyy-MM-dd"),
+            Day = record.Day,
             MobileCountryCode = record.Country.MobileCode.ToString(),
             PricePerSMS = Math.Round(record.Country.PricePerSMS, 2),
             Count = record.Count,
