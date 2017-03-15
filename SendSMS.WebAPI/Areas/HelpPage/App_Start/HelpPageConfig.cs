@@ -77,8 +77,8 @@ namespace SendSMS.WebAPI.Areas.HelpPage
             config.SetSampleObjects(new Dictionary<Type, object>
             {
                 {
-                    typeof(IEnumerable<Country>),
-                    new [] { DataManager.CreateInfo(germany), DataManager.CreateInfo(austria) }
+                    typeof(List<Country>),
+                    new List<Country> { DataManager.CreateInfo(germany), DataManager.CreateInfo(austria) }
                 },
                 {
                     typeof(GetSentSMSResponse),
@@ -89,8 +89,8 @@ namespace SendSMS.WebAPI.Areas.HelpPage
                     }
                 },
                 {
-                    typeof(IEnumerable<Record>),
-                    new [] { germanyRecord, austriaRecord }
+                    typeof(List<Record>),
+                    new List<Record> { germanyRecord, austriaRecord }
                 }
             });
 
