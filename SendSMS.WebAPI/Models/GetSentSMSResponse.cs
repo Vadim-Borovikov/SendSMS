@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace SendSMS.WebAPI.Models
 {
@@ -13,12 +14,14 @@ namespace SendSMS.WebAPI.Models
         /// The total count of all items matching the filter.
         /// </summary>
         [DataMember(Name = "totalCount", Order = 1)]
+        [XmlElement(ElementName = "totalCount", Order = 1)]
         public int TotalAmount { get; set; }
 
         /// <summary>
         /// The items matching the filter.
         /// </summary>
         [DataMember(Name = "items", Order = 2)]
+        [XmlElement(ElementName = "items", Order = 2)]
         public List<SMS> Items { get; set; }
     }
 }
