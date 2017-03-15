@@ -13,7 +13,7 @@ namespace SendSMS.WebAPI.Models
         /// The total count of all items matching the filter.
         /// </summary>
         [DataMember(Name = "totalCount", Order = 1)]
-        public int TotalCount { get; set; }
+        public int TotalAmount { get; set; }
 
         /// <summary>
         /// The items matching the filter.

@@ -26,6 +26,11 @@ namespace SendSMS.Data
             return await AddSMSAsync(sms);
         }
 
+        public static async Task<int> GetSentSMSAmountAsync(DateTime? from, DateTime? to)
+        {
+            return await GetSentSMS(from, to).CountAsync();
+        }
+
         public static async Task<List<SMS>> GetSentSMSAsync(DateTime? from, DateTime? to, int skip, int? take)
         {
             IQueryable<SMS> sms = GetSentSMS(from, to).OrderBy(s => s.SentTime).Skip(skip);

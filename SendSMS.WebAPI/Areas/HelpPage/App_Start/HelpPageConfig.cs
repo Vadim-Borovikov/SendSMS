@@ -82,7 +82,11 @@ namespace SendSMS.WebAPI.Areas.HelpPage
                 },
                 {
                     typeof(GetSentSMSResponse),
-                    DataManager.CreateGetSentSMSResponse(new List<SMS> { successSms, failedSms })
+                    new GetSentSMSResponse
+                    {
+                        Items = new List<SMS> { successSms, failedSms },
+                        TotalAmount = 20
+                    }
                 },
                 {
                     typeof(IEnumerable<Record>),

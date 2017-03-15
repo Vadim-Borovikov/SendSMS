@@ -36,9 +36,14 @@ namespace SendSMS.WebAPI.BusinessLogic
 
         public static async Task<GetSentSMSResponse> GetSentSMSAsync(DateTime? from, DateTime? to, int skip, int? take)
         {
+            Task<int> totalAmountTask = Data.DataProvider.GetSentSMSAmountAsync(from, to);
             List<Data.SMS> records = await Data.DataProvider.GetSentSMSAsync(from, to, skip, take);
-            List<SMS> smsInfos = records.Select(CreateInfo).ToList();
-            return CreateGetSentSMSResponse(smsInfos);
+            int totalAmount = await totalAmountTask;
+            return new GetSentSMSResponse
+            {
+                TotalAmount = totalAmount,
+                Items = records.Select(CreateInfo).ToList()
+            };
         }
 
         #endregion SMSController
@@ -73,15 +78,6 @@ namespace SendSMS.WebAPI.BusinessLogic
             Name = country.Name,
             PricePerSMS = Math.Round(country.PricePerSMS, 2)
         };
-
-        public static GetSentSMSResponse CreateGetSentSMSResponse(List<SMS> items)
-        {
-            return new GetSentSMSResponse
-            {
-                TotalCount = items.Count,
-                Items = items
-            };
-        }
 
         public static Record CreateRecord(Data.Record record) => new Record
         {
